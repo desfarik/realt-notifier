@@ -3,11 +3,22 @@ export class RealtFilters {
     filters: string[] = [];
 
     constructor() {
+        this.filters.push('priceMeterType=all');
         return this;
     }
 
     addRoomCount(roomCount: number) {
         this.filters.push(`rooms=${roomCount}`)
+        return this;
+    }
+
+    maxPrice(price: number) {
+        this.filters.push(`priceTo=${price}`)
+        return this;
+    }
+
+    priceUsd() {
+        this.filters.push(`priceType=840`)
         return this;
     }
     minAreaLiving(area: number) {

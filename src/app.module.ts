@@ -6,7 +6,9 @@ import { TelegramMessageBuilder } from './service/telegram-message.builder';
 import { ScheduleModule } from '@nestjs/schedule';
 import { NewFlatsScheduler } from "./service/new-flats-scheduler";
 import { FlatService } from "./service/flat.service";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { LastSyncRepository } from "./repository/last-sync.repository";
+import { JSON_DB_TOKEN } from "./db/json.db";
+const JSONdb = require("simple-json-db");
 
 @Module({
   imports: [
@@ -19,6 +21,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
     TelegramMessageBuilder,
     NewFlatsScheduler,
     FlatService,
+    {
+      provide: JSON_DB_TOKEN,
+      useValue: new JSONdb('./db/json.db.json')
+    },
+    LastSyncRepository,
 
   ],
 })

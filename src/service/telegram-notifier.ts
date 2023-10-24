@@ -18,10 +18,6 @@ export class TelegramNotifier {
   constructor(private messageBuilder: TelegramMessageBuilder) {
   }
   async notifyNewFlat(flat: Flat): Promise<void> {
-    if(true) {
-      console.log(this.messageBuilder.buildFlatMessage(flat))
-      return Promise.resolve();
-    }
     await fetch(TELEGRAM_GROUP_URL, {
       method: 'POST',
       headers: HEADERS,
@@ -34,5 +30,6 @@ export class TelegramNotifier {
         chat_id: '-4059693421',
       }),
     });
+    console.log(`Notification was sent for: https://realt.by/sale-flats/object/${flat.code}/`)
   }
 }

@@ -11,6 +11,8 @@ export class FlatService {
     return new RealtFilters()
       .filterByMinskDistricts()
       .notFirstFloor()
+      .maxPrice(110000)
+      .priceUsd()
       .addRoomCount(2)
       .addRoomCount(3)
       .addRoomCount(4)
@@ -19,16 +21,23 @@ export class FlatService {
       .build();
   }
 
-  async fetchNewFlats(lastId: number) {
+  async fetchNewFlats(lastSyncTime: number) {
     const newFlats: Flat[] = [];
     let page = 1;
     while (true) {
-      const flats = await this.realtWebsiteParser.parse(this.realtFilters, page);
-      const lastIdIndex = flats.findIndex((flat) => flat.code === lastId);
+      const flats = await this.realtWebsiteParser.parse(
+        this.realtFilters,
+        page,
+      );
+      const lastIdIndex = flats.findIndex(
+        (flat) => lastSyncTime > new Date(flat.updatedAt).getTime(),
+      );
       page++;
       if (lastIdIndex > -1) {
         newFlats.push(...flats.slice(0, lastIdIndex));
-        return newFlats.reverse();
+        return newFlats
+          .reverse()
+          .filter((flat) => lastSyncTime < new Date(flat.createdAt).getTime());
       } else {
         newFlats.push(...flats);
       }

@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  realt:
+    container_name: nestjs
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3000
+      - TZ=Europe/Minsk
+      - NODE_ENV=production
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./db:/usr/app/db
+
