@@ -20,7 +20,7 @@ export class RealtController {
       .addRoomCount(2)
       .addRoomCount(3)
       .addRoomCount(4)
-      .minAreaLiving(50)
+      .minTotalArea(50)
       .sortByUpdated()
       .build();
 

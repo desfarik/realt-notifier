@@ -26,6 +26,11 @@ export class RealtFilters {
         return this;
     }
 
+    minTotalArea(area: number) {
+        this.filters.push(`areaTotalFrom=${area}`)
+        return this;
+    }
+
     notFirstFloor() {
         this.filters.push(`isFirstStorey=false`)
         return this;
