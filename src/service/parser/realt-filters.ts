@@ -3,7 +3,6 @@ export class RealtFilters {
     filters: string[] = [];
 
     constructor() {
-        this.filters.push('priceMeterType=all');
         return this;
     }
 
@@ -14,6 +13,10 @@ export class RealtFilters {
 
     maxPrice(price: number) {
         this.filters.push(`priceTo=${price}`)
+        return this;
+    }
+    maxPricePerM2(price: number) {
+        this.filters.push(`priceMeterType=perM2&priceTo=${price}`)
         return this;
     }
 
