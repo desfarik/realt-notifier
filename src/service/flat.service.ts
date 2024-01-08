@@ -11,7 +11,7 @@ export class FlatService {
     return new RealtFilters()
       .filterByMinskDistricts()
       .notFirstFloor()
-      .maxPricePerM2(1500)
+      .maxPrice(150_000)
       .priceUsd()
       .addRoomCount(2)
       .addRoomCount(3)
