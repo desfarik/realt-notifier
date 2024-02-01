@@ -37,7 +37,8 @@ export class FlatService {
         newFlats.push(...flats.slice(0, lastIdIndex));
         return newFlats
           .reverse()
-          .filter((flat) => lastSyncTime < new Date(flat.createdAt).getTime());
+          .filter((flat) => lastSyncTime < new Date(flat.createdAt).getTime())
+          .filter((flat) => !flat.address.includes('Нововиленская'));
       } else {
         newFlats.push(...flats);
       }

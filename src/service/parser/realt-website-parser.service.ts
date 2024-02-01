@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { Flat } from "../../models/flat";
+import { rateLimit } from "utils-decorators";
 
 @Injectable()
 export class RealtWebsiteParser {
+
+  @rateLimit({
+    timeSpanMs: 1000,
+    allowedCalls: 1,
+  })
   async parse(filters: string = '', page = 1): Promise<Flat[]> {
     const url = `https://realt.by/sale/flats/?${filters}&page=${page}`;
     console.log(`Try to fetch data from url: ${url}`)
