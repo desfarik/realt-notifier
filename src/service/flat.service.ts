@@ -11,7 +11,7 @@ export class FlatService {
     return new RealtFilters()
       .filterByMinskDistricts()
       .notFirstFloor()
-      .maxPrice(150_000)
+      .maxPrice(180_000)
       .priceUsd()
       .addRoomCount(2)
       .addRoomCount(3)
@@ -38,7 +38,9 @@ export class FlatService {
         return newFlats
           .reverse()
           .filter((flat) => lastSyncTime < new Date(flat.createdAt).getTime())
-          .filter((flat) => !flat.address.includes('Нововиленская'));
+          .filter((flat) => !flat.address.includes('Нововиленская'))
+          .filter((flat) => !/маяк минска/gi.test(flat.description))
+          .filter((flat) => !/парк челюскинцев/gi.test(flat.description));
       } else {
         newFlats.push(...flats);
       }
