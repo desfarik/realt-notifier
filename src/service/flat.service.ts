@@ -17,7 +17,7 @@ export class FlatService {
       .addRoomCount(3)
       .addRoomCount(4)
       .minTotalArea(50)
-      .sortByUpdated()
+      .sortByCreated()
       .build();
   }
 

@@ -12,7 +12,7 @@ services:
       - TZ=Europe/Minsk
       - NODE_ENV=production
     ports:
-      - '3000:3000'
+      - '4500:4500'
     volumes:
       - ./db:/usr/app/db
 

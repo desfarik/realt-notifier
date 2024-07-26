@@ -44,6 +44,12 @@ export class RealtFilters {
         return this;
     }
 
+    sortByCreated() {
+        this.filters.push('sortType=createdAt');
+        return this;
+    }
+
+
     filterByMinskDistricts() {
         this.filters.push('addressV2=[{"townDistrictUuid":"4daa4f46-7b00-11eb-8943-0cc47adabd66"},{"townDistrictUuid":"4daa506e-7b00-11eb-8943-0cc47adabd66"},{"townDistrictUuid":"4daa52f9-7b00-11eb-8943-0cc47adabd66"}]')
         return this;

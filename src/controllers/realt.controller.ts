@@ -4,12 +4,16 @@ import { RealtWebsiteParser } from '../service/parser/realt-website-parser.servi
 import { RealtFilters } from '../service/parser/realt-filters';
 import { TelegramNotifier } from '../service/telegram-notifier';
 import { formatPrice } from '../formatters/price.formatter';
+import { LastSyncRepository } from '../repository/last-sync.repository';
+import { NewFlatsScheduler } from '../service/new-flats-scheduler';
 
 @Controller()
 export class RealtController {
   constructor(
     private readonly realtWebsiteParser: RealtWebsiteParser,
     private readonly telegramNotifier: TelegramNotifier,
+    private readonly lastSyncRepository: LastSyncRepository,
+    private readonly newFlatsScheduler: NewFlatsScheduler,
   ) {}
 
   @Post('realt/parse/:page')
@@ -21,10 +25,15 @@ export class RealtController {
       .addRoomCount(3)
       .addRoomCount(4)
       .minTotalArea(50)
-      .sortByUpdated()
+      .sortByCreated()
       .build();
 
     return this.realtWebsiteParser.parse(filters, page);
+  }
+
+  @Post('realt/parsing/start')
+  startParseRealt(): Promise<void> {
+    return this.newFlatsScheduler.checkNewFlats();
   }
 
   @Post('realt/telegram/notify/:number')
@@ -38,5 +47,10 @@ export class RealtController {
   @Get('realt/format/:number')
   format(@Param('number') number: number): string {
     return formatPrice(number);
+  }
+
+  @Post('realt/last-updated-date/:date')
+  setLastUpdatedDate(@Param('date') number: number): void {
+    this.lastSyncRepository.setLastSyncTime(Number(number));
   }
 }
